@@ -30,26 +30,10 @@
         </nav>
 
         <div class="container">
-    <div class="row">
-        <div class="col mt-4 mb-4">
-            <form action="{% url 'car_rental_app:search' %}" method="post">
-                {% csrf_token %}
-                <div class="input-group input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Let's Go!!!</span>
-                    </div>
-                    {{ query_form.text }}
-                    <button type="submit" class="btn btn-info" >Search It</button>
-                </div>
 
-            </form>
-        </div>
-    </div>
-
-
-    {% if cars %}
+    {% if queried %}
         <div class="row mt-3 mx-5">
-            {% for car in cars %}
+            {% for car in queried %}
                 <div class="col-md-2">
                     <div class="card text-center">
                             <div class="card-header">

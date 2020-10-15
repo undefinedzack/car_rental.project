@@ -8,6 +8,7 @@ def home(request):
 
     query_form = Query_Form()
 
+
     context = {
         'query_form' : query_form
     }
@@ -18,16 +19,26 @@ def home(request):
 def search(request):
 
     query_form = Query_Form(request.POST)
+    cars = Car.objects.all()
+    customers = Customer.objects.all()
 
     if query_form.is_valid():
         text = request.POST['text']
 
         l = list(text.split(' '))
 
-        if (l[0].lower() == 'car'):
-            print(Car.objects.all())
+        if len(l) == 1:
+            if (l[0].lower() == 'car'):
+                queried = Car.objects.all()
 
-    context = {}
+        if len(l) > 1:
+            if (l[0].lower() == 'car' ):
+                queried = Car.objects.filter(color__iexact=l[1].lower())
+                print(queried)
 
-    return redirect('car_rental_app:home')
+    context = {
+        'queried': queried
+    }
+
+    return render(request, 'car_rental_app/result.html', context)
 
