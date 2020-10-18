@@ -89,6 +89,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'car-rental-database',
+    'CLIENT': {
+        'host': 'mongodb+srv://adhney:toor@cluster0.dnnhc.mongodb.net/test',
+        }
     }
 }
 
