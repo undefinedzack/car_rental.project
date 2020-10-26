@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Car(models.Model):
     car_id = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=45, null=True)
@@ -22,4 +21,17 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.first_name
+
+class Booking(models.Model):
+    booking_id = models.IntegerField(primary_key=True)
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    car_id = models.ForeignKey(Car, on_delete=models.CASCADE)
+    date_of_issue = models.DateTimeField('Date of Issue')
+    date_of_return = models.DateTimeField('Date of Return')
+    amount = models.IntegerField
+    pickup_location = models.CharField(max_length=500)
+
+    def __str__(self):
+        return str(self.booking_id)
+
 

@@ -30,23 +30,55 @@
         </nav>
 
     <div class="container">
-        <div class="row">
+       <div class="row">
         <div class="col mt-4 mb-4">
-            <form action="{% url 'car_rental_app:cars' %}" method="post">
+            <form action="{% url 'car_rental_app:add car' %}" method="post">
                 {% csrf_token %}
+
+{#                {{ car_form.as_table }}#}
+
                 <div class="input-group input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Let's Go!!!</span>
+                        <span class="input-group-text" id="inputGroup-sizing-default">Model</span>
                     </div>
-                    {{ .text }}
-                    <button type="submit" class="btn btn-info" >Search It</button>
+                    {{ car_form.model }}
                 </div>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Brand</span>
+                    </div>
+                    {{ car_form.brand }}
+                </div>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Color</span>
+                    </div>
+                    {{ car_form.color }}
+                </div>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+                    </div>
+                    {{ car_form.description }}
+                </div>
+{#                <div class="input-group input-group-lg">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <span class="input-group-text" id="inputGroup-sizing-default">Date of Purchase</span>#}
+{#                    </div>#}
+{#                    {{ car_form.date_of_purchase }}#}
+{#                </div>#}
+{#                <div class="input-group input-group-lg">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <span class="input-group-text" id="inputGroup-sizing-default">Available</span>#}
+{#                    </div>#}
+{#                    {{ car_form.available }}#}
+                    <button type="submit" class="btn btn-info" >Search It</button>
+{#                </div>#}
 
             </form>
         </div>
     </div>
     </div>
-
 
 
 
