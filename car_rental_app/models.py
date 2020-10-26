@@ -1,16 +1,19 @@
 from django.db import models
 
+
 class Car(models.Model):
     car_id = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=45, null=True)
     brand = models.CharField(max_length=45, null=True)
     color = models.CharField(max_length=45, null=True)
     description = models.CharField(max_length=500, null=True)
-    date_of_purchase = models.DateTimeField('Date of purchase', null=True)
+    date_of_purchase = models.DateField('Date of purchase', null=True)
+    time_of_purchase = models.TimeField('Time of purchase', null=True)
     available = models.BooleanField(default=False)
 
     def __str__(self):
         return self.brand
+
 
 class Customer(models.Model):
     customer_id = models.IntegerField(primary_key=True)
@@ -21,6 +24,7 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.first_name
+
 
 class Booking(models.Model):
     booking_id = models.IntegerField(primary_key=True)
@@ -33,5 +37,3 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.booking_id)
-
-

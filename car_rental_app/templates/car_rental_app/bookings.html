@@ -1,0 +1,27 @@
+{% extends 'car_rental_app/base.html' %}
+
+{% block content %}
+
+    {% if bookings %}
+        <div class="row mt-3 mx-5">
+            {% for booking in bookings %}
+                <div class="col-md-4">
+                    <div class="card text-center">
+                            <div class="card-header">
+                                {{ booking.booking_id }}
+                            </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ booking.customer_id }}.</h5>
+                            <p class="card-text">{{ booking.car_id }}</p>
+                            <p class="card-text">{{ booking.date_of_issue }}</p>
+                            <p class="card-text">{{ booking.date_of_return }}</p>
+                            <p class="card-text">{{ booking.amount }}</p>
+                            <p class="card-text">{{ booking.pickup_location }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

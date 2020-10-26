@@ -1,0 +1,24 @@
+{% extends 'car_rental_app/base.html' %}
+
+{% block content %}
+
+    {% if customers %}
+        <div class="row mt-3 mx-5">
+            {% for customer in customers %}
+                <div class="col">
+                    <div class="card text-center">
+                            <div class="card-header">
+                                {{ customer.customer_id }}
+                            </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ customer.first_name }}.</h5>
+                            <p class="card-text">{{ customer.last_name }}</p>
+                            <p class="card-text">{{ customer.mobile_no }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

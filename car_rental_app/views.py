@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
-from .models import Customer, Car
+from .models import Customer, Car, Booking
 from .forms import Query_Form, Car_Form
 
 def home(request):
@@ -25,6 +25,24 @@ def car(request):
     }
 
     return render(request, 'car_rental_app/car.html', context)
+
+def customer(request):
+    customers = Customer.objects.all()
+
+    context = {
+        'customers' : customers
+    }
+
+    return render(request, 'car_rental_app/customers.html', context)
+
+def booking(request):
+    bookings = Booking.objects.all()
+
+    context = {
+        'bookings' : bookings
+    }
+
+    return render(request, 'car_rental_app/bookings.html', context)
 
 @require_POST
 def search(request):
@@ -63,8 +81,9 @@ def add_car(request):
         brand=request.POST['brand'],
         color=request.POST['color'],
         description=request.POST['description'],
-        # date_of_purchase=request.POST['date_of_purchase'],
-        # available=request.POST['available']
+        date_of_purchase=request.POST['date_of_purchase'],
+        time_of_purchase=request.POST['time_of_purchase'],
+        #available=request.POST['available']
 
     )
     new_car.save()
