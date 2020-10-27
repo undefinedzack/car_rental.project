@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import Car
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -21,3 +23,8 @@ class Car_Form(forms.Form):
 class Car_id_form(forms.Form):
     idz = forms.IntegerField()
 
+class Car_update_form(forms.ModelForm):
+
+    class Meta:
+        model = Car
+        fields = '__all__'
