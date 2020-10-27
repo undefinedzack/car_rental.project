@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
 from .models import Customer, Car, Booking
-from .forms import Query_Form, Car_Form
+from .forms import Query_Form, Car_Form, Car_id_form
 
 def home(request):
 
@@ -18,10 +18,12 @@ def home(request):
 def car(request):
     cars = Car.objects.all()
     car_form = Car_Form()
+    car_id_form = Car_id_form()
 
     context = {
         'cars' : cars,
         'car_form' : car_form,
+        'car_id_form' : car_id_form,
     }
 
     return render(request, 'car_rental_app/car.html', context)
@@ -76,6 +78,7 @@ def add_car(request):
     car_form = Car_Form(request.POST)
 
     # if car_form.is_valid():
+    avaibility = str(request.POST['available'])
     new_car = Car(
         model=request.POST['model'],
         brand=request.POST['brand'],
@@ -83,12 +86,27 @@ def add_car(request):
         description=request.POST['description'],
         date_of_purchase=request.POST['date_of_purchase'],
         time_of_purchase=request.POST['time_of_purchase'],
-        #available=request.POST['available']
+        available = True if avaibility == 'on' else False
 
     )
     new_car.save()
 
     return redirect('car_rental_app:cars')
+
+def delete_car(request, id):
+    car = Car.objects.get(pk=id)
+
+    car.delete()
+
+    return redirect('car_rental_app:cars')
+
+def delete_car_user_input(request):
+    car = Car.objects.get(pk=request.POST['idz'])
+
+    car.delete()
+
+    return redirect('car_rental_app:cars')
+
 
 
 

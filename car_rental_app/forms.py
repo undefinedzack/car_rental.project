@@ -18,3 +18,6 @@ class Car_Form(forms.Form):
     time_of_purchase = forms.TimeField(widget=TimeInput)
     available = forms.BooleanField()
 
+class Car_id_form(forms.Form):
+    idz = forms.IntegerField()
+
