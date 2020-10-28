@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Car
+from .models import Car, Customer, Booking
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -20,7 +20,7 @@ class Car_Form(forms.Form):
     time_of_purchase = forms.TimeField(widget=TimeInput)
     available = forms.BooleanField()
 
-class Car_id_form(forms.Form):
+class id_form(forms.Form):
     idz = forms.IntegerField()
 
 class Car_update_form(forms.ModelForm):
@@ -28,3 +28,19 @@ class Car_update_form(forms.ModelForm):
     class Meta:
         model = Car
         fields = '__all__'
+
+class Customer_form(forms.ModelForm):
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+class Booking_form(forms.ModelForm):
+
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        widgets = {
+            'date_of_issue' : DateInput,
+            'date_of_return' : DateInput
+        }

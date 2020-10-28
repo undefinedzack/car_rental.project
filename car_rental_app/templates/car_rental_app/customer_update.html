@@ -2,13 +2,13 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <form action="{% url 'car_rental_app:update car' key %}" method="post">
+                <form action="{% url 'car_rental_app:update customer' key %}" method="post">
                     {% csrf_token %}
                     {{ edit_form.as_p }}
-                    <button type="submit" class="btn btn-info">Edit Car</button>
+                    <button type="submit" class="btn btn-info">Edit Customer</button>
                 </form>
             </div>
         </div>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from .models import Customer, Car, Booking
-from .forms import Query_Form, Car_Form, Car_id_form, Car_update_form
+from .forms import Query_Form, Car_Form, id_form, Car_update_form, Customer_form, Booking_form
 
 
 def home(request):
@@ -18,7 +18,7 @@ def home(request):
 def car(request):
     cars = Car.objects.all()
     car_form = Car_Form()
-    car_id_form = Car_id_form()
+    car_id_form = id_form()
 
     context = {
         'cars': cars,
@@ -31,9 +31,13 @@ def car(request):
 
 def customer(request):
     customers = Customer.objects.all()
+    customer_form = Customer_form()
+    customer_id_form = id_form()
 
     context = {
-        'customers': customers
+        'customers': customers,
+        'customer_form': customer_form,
+        'customer_id_form': customer_id_form
     }
 
     return render(request, 'car_rental_app/customers.html', context)
@@ -41,9 +45,13 @@ def customer(request):
 
 def booking(request):
     bookings = Booking.objects.all()
+    booking_form = Booking_form()
+    booking_id_form = id_form()
 
     context = {
-        'bookings': bookings
+        'bookings': bookings,
+        'booking_form': booking_form,
+        'booking_id_form': booking_id_form
     }
 
     return render(request, 'car_rental_app/bookings.html', context)
@@ -76,6 +84,7 @@ def search(request):
     return render(request, 'car_rental_app/result.html', context)
 
 
+# CAR SECTION
 @require_POST
 def add_car(request):
     car_form = Car_Form(request.POST)
@@ -127,20 +136,150 @@ def update_car(request, id):
             return redirect('car_rental_app:cars')
 
     context = {
-        'edit_form': edit_form
+        'edit_form': edit_form,
+        'key': id
     }
 
     return render(request, 'car_rental_app/car_update.html', context)
 
+
 @require_POST
 def update_car_user_input(request):
+    # bug update via update_car_user gets created with new thing not updating present one to update
+    # if request.method == 'POST':
+    #     edit_form = Car_update_form(request.POST)
+    #     if edit_form.is_valid():
+    #         edit_form.save()
+    #         return redirect('car_rental_app:cars')
+
     idz = int(request.POST['idz'])
     car = Car.objects.get(pk=idz)
 
     edit_form = Car_update_form(instance=car)
 
     context = {
-        'edit_form': edit_form
+        'edit_form': edit_form,
+        'key': idz
     }
 
     return render(request, 'car_rental_app/car_update.html', context)
+
+
+# CUSTOMER SECTION
+@require_POST
+def add_customer(request):
+    customer_form = Customer_form(request.POST)
+
+    if customer_form.is_valid():
+        customer_form.save()
+
+    return redirect('car_rental_app:customers')
+
+
+def delete_customer(request, id):
+    customer = Customer.objects.get(pk=id)
+
+    customer.delete()
+
+    return redirect('car_rental_app:customers')
+
+
+@require_POST
+def delete_customer_user_input(request):
+    idz = int(request.POST['idz'])
+    customer = Customer.objects.get(pk=idz)
+
+    customer.delete()
+
+    return redirect('car_rental_app:customers')
+
+
+def update_customer(request, id):
+    present_customer = Customer.objects.get(pk=id)
+
+    edit_form = Customer_form(instance=present_customer)
+
+    if request.method == 'POST':
+        edit_form = Customer_form(request.POST, instance=present_customer)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('car_rental_app:customers')
+
+    context = {
+        'edit_form': edit_form,
+        'key': id
+    }
+
+    return render(request, 'car_rental_app/customer_update.html', context)
+
+
+def update_customer_by_user(request):
+    idz = int(request.POST['idz'])
+    customer = Customer.objects.get(pk=idz)
+
+    edit_form = Customer_form(instance=customer)
+
+    context = {
+        'edit_form': edit_form,
+        'key': idz
+    }
+
+    return render(request, 'car_rental_app/customer_update.html', context)
+
+
+# BOOKING SECTION
+
+@require_POST
+def add_booking(request):
+    booking_form = Booking_form(request.POST)
+    if booking_form.is_valid():
+        booking_form.save()
+
+    return redirect('car_rental_app:bookings')
+
+def delete_booking(request, id):
+    booking = Booking.objects.get(pk=id)
+
+    booking.delete()
+
+    return redirect('car_rental_app:bookings')
+
+@require_POST
+def delete_booking_user_input(request):
+    idz = int(request.POST['idz'])
+    booking = Booking.objects.get(pk=idz)
+
+    booking.delete()
+
+    return redirect('car_rental_app:bookings')
+
+def update_booking(request, id):
+    present_booking = Booking.objects.get(pk=id)
+
+    edit_form = Booking_form(instance=present_booking)
+
+    if request.method == 'POST':
+        edit_form = Booking_form(request.POST, instance=present_booking)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('car_rental_app:bookings')
+
+    context = {
+        'edit_form': edit_form,
+        'key': id
+    }
+
+    return render(request, 'car_rental_app/booking_update.html', context)
+
+def update_booking_by_user(request):
+    idz = int(request.POST['idz'])
+    present_booking = Booking.objects.get(pk=idz)
+
+    edit_form = Booking_form(instance=present_booking)
+
+    context = {
+        'edit_form': edit_form,
+        'key': idz
+    }
+
+    return render(request, 'car_rental_app/booking_update.html', context)

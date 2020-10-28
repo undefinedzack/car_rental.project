@@ -29,6 +29,6 @@ class Booking(models.Model):
     car_id = models.ForeignKey(Car, on_delete=models.CASCADE)
     date_of_issue = models.DateField('Date of Issue')
     date_of_return = models.DateField('Date of Return')
-    amount = models.IntegerField
+    amount = models.IntegerField()
     pickup_location = models.CharField(max_length=500)
 

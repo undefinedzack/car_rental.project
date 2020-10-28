@@ -2,26 +2,150 @@
 
 {% block content %}
 
-    {% if bookings %}
-        <div class="row mt-3 mx-5">
-            {% for booking in bookings %}
-                <div class="col-md-4">
-                    <div class="card text-center">
-                            <div class="card-header">
-                                {{ booking.booking_id }}
-                            </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ booking.customer_id }}.</h5>
-                            <p class="card-text">{{ booking.car_id }}</p>
-                            <p class="card-text">{{ booking.date_of_issue }}</p>
-                            <p class="card-text">{{ booking.date_of_return }}</p>
-                            <p class="card-text">{{ booking.amount }}</p>
-                            <p class="card-text">{{ booking.pickup_location }}</p>
+    <div class="container">
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#bookingAddModal"><a>Add Booking</a></button>
+                <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#bookingDeleteModal">Delete Booking</button>
+                <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#bookingEditModal">Edit Booking</button>
+            </div>
+        </div>
+
+
+
+    {#    models#}
+
+    <!--Add Booking Modal -->
+        <div class="modal fade" id="bookingAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col mt-4 mb-4">
+                            <form action="{% url 'car_rental_app:add booking' %}" method="post">
+                                {% csrf_token %}
+                                {{ booking_form.as_p }}
+
+                                <button type="submit" class="btn btn-info">Add Booking</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
-    {% endif %}
+
+
+
+        {#        delete car model#}
+            <div class="modal fade" id="bookingDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Car</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'car_rental_app:delete booking user input' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="input-group input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Id</span>
+                                </div>
+                            {{booking_id_form.idz}}
+                            </div>
+
+                        <button type="submit" class="btn btn-info">Delete Booking</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+        {#    edit booking modal#}
+            <div class="modal fade" id="bookingEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Car</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'car_rental_app:update booking by user' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="input-group input-group-lg">
+                            {{booking_id_form.idz}}
+                        </div>
+
+                        <button type="submit" class="btn btn-info">Edit Booking</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        {% if bookings %}
+            <div class="container">
+                <div class="row mt-3">
+                    {% for booking in bookings %}
+                        <div class="col-4 mt-2">
+                            <div class="card text-center">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                {{ booking.pk }}
+                                            </div>
+                                            <div class="col-4">
+                                                <a href={% url 'car_rental_app:delete booking' booking.pk %} > <span class="badge badge-pill badge-warning">Delete</span></a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href={% url 'car_rental_app:update booking' booking.pk %} > <span class="badge badge-pill badge-info">Edit</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ booking.customer_id }}.</h5>
+                                    <p class="card-text">{{ booking.car_id }}</p>
+                                    <p class="card-text">{{ booking.date_of_issue }}</p>
+                                    <p class="card-text">{{ booking.date_of_return }}</p>
+                                    <p class="card-text">{{ booking.amount }}</p>
+                                    <p class="card-text">{{ booking.pickup_location }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
 
 {% endblock %}
