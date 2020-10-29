@@ -97,7 +97,7 @@ def add_car(request):
         color=request.POST['color'],
         description=request.POST['description'],
         date_of_purchase=request.POST['date_of_purchase'],
-        time_of_purchase=request.POST['time_of_purchase'],
+        #time_of_purchase=request.POST['time_of_purchase'],
         available=True if avaibility == 'on' else False
 
     )
