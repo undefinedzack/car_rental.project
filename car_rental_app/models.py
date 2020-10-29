@@ -7,7 +7,7 @@ class Car(models.Model):
     color = models.CharField(max_length=45)
     description = models.CharField(max_length=500)
     date_of_purchase = models.DateField('Date of purchase')
-    time_of_purchase = models.TimeField('Time of purchase')
+    #time_of_purchase = models.TimeField('Time of purchase')
     available = models.BooleanField(default=False)
 
     def __str__(self):

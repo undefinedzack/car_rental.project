@@ -5,8 +5,8 @@ from .models import Car, Customer, Booking
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-class TimeInput(forms.TimeInput):
-    input_type = 'time'
+# class TimeInput(forms.TimeInput):
+#     input_type = 'time'
 
 class Query_Form(forms.Form):
     text = forms.CharField(max_length=1000)
@@ -17,7 +17,7 @@ class Car_Form(forms.Form):
     color = forms.CharField()
     description = forms.CharField()
     date_of_purchase = forms.DateField(widget=DateInput)
-    time_of_purchase = forms.TimeField(widget=TimeInput)
+    #time_of_purchase = forms.TimeField(widget=TimeInput)
     available = forms.BooleanField()
 
 class id_form(forms.Form):
