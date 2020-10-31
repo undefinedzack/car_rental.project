@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
 
 from .models import Customer, Car, Booking
 from .forms import Query_Form, Car_Form, id_form, Car_update_form, Customer_form, Booking_form
 
+import datetime
 
 def home(request):
     query_form = Query_Form()
@@ -283,3 +285,64 @@ def update_booking_by_user(request):
     }
 
     return render(request, 'car_rental_app/booking_update.html', context)
+
+class ChartView(TemplateView):
+    template_name = 'car_rental_app/charts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        carzzz = []
+        namezzz = []
+        for x in range(1999,2021):
+            carzzz.append(Car.objects.filter(date_of_purchase__year=x).count())
+            namezzz.append(f'{x}')
+
+
+        max_car_sales_year = int(namezzz[carzzz.index(max(carzzz))])
+        min_car_sales_year = int(namezzz[carzzz.index(min(carzzz))])
+
+        context = {
+            'namezzz': namezzz,
+            'carzzz' : carzzz,
+            'max_car_sales_year': max_car_sales_year,
+            'min_car_sales_year': min_car_sales_year
+        }
+
+        return context
+
+def good_cars(request):
+    in_good_condition = [good_one for good_one in Car.objects.filter(description__iexact='good')]
+
+    context = {
+        'in_good_condition' : in_good_condition,
+    }
+
+    return render(request, 'car_rental_app/goodones.html', context)
+
+def fair_cars(request):
+    in_fair_condition = [good_one for good_one in Car.objects.filter(description__iexact='fair')]
+
+    context = {
+        'in_fair_condition' : in_fair_condition,
+    }
+
+    return render(request, 'car_rental_app/fair_cars.html', context)
+
+def excellent_cars(request):
+    in_excellent_condition = [good_one for good_one in Car.objects.filter(description__iexact='excellent')]
+
+    context = {
+        'in_excellent_condition' : in_excellent_condition,
+    }
+
+    return render(request, 'car_rental_app/excellent_cars.html', context)
+
+def cars_after_date(request):
+    after_date = [ x for x in Car.objects.filter(date_of_purchase__gt=datetime.date(2010,1,1)).order_by('date_of_purchase')]
+
+    context = {
+        'after_date' : after_date
+    }
+
+    return render(request, 'car_rental_app/car_after_date.html', context)

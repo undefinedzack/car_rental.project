@@ -10,22 +10,7 @@
                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#carAddModal"><a>Add Car</a></button>
                   <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#carDeleteModal">Delete Car</button>
                   <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#carEditModal">Edit Car</button>
-                   <a href="{% url 'car_rental_app:chart' %}"> <button type="button" class="btn btn-secondary btn-lg nav-link">Car vs Year </button></a>
-
-
-                    <div class="dropdown">
-                      <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Car Condition
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{% url 'car_rental_app:good cars' %}">Good Cars</a>
-                        <a class="dropdown-item" href="{% url 'car_rental_app:fair cars' %}">Fair Cars</a>
-                        <a class="dropdown-item" href="{% url 'car_rental_app:excellent cars' %}">Excellent Cars</a>
-                      </div>
-                    </div>
-
-                  <a href="{% url 'car_rental_app:car after date' %}"><button type="button" class="btn btn-secondary btn-lg nav-link">Cars Purchased after 2010 </button></a>
-
+                    <a href="{% url 'car_rental_app:chart' %}"> <button type="button" class="btn btn-secondary btn-lg nav-link">Car vs Year </button></a>
                 </div>
             </div>
         </div>
@@ -166,9 +151,9 @@
             </div>
 
 
-        {% if cars %}
+        {% if after_date %}
             <div class="row mt-3">
-                {% for car in cars %}
+                {% for car in after_date %}
                     <div class="col-4 mt-2">
                         <div class="card text-center">
                                 <div class="card-header">
