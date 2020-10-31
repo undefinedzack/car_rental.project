@@ -29,10 +29,12 @@ urlpatterns = [
     path('bookings/update_booking_user_input', views.update_booking_by_user, name='update booking by user'),
 
     #QUERIES SECTION
-    path('cars/charts/', views.ChartView.as_view(), name='chart'),
+    path('cars/charts', views.ChartView.as_view(), name='chart'),
     path('cars/goodones', views.good_cars, name='good cars'),
     path('cars/fairones', views.fair_cars, name='fair cars'),
     path('cars/excellentones', views.excellent_cars, name='excellent cars'),
     path('cars/car_after_date', views.cars_after_date, name='car after date'),
+
+    path('cars/color/<str:color>', views.color_of_car, name='car color'),
 
 ]

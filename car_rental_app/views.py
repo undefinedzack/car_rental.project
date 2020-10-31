@@ -7,6 +7,7 @@ from .forms import Query_Form, Car_Form, id_form, Car_update_form, Customer_form
 
 import datetime
 
+
 def home(request):
     query_form = Query_Form()
 
@@ -22,10 +23,14 @@ def car(request):
     car_form = Car_Form()
     car_id_form = id_form()
 
+    color_set = set(str(colors.color) for colors in Car.objects.all() if str(colors.color) != '')
+    print(color_set)
+
     context = {
         'cars': cars,
         'car_form': car_form,
         'car_id_form': car_id_form,
+        'color_set': color_set
     }
 
     return render(request, 'car_rental_app/car.html', context)
@@ -71,11 +76,11 @@ def search(request):
         l = list(text.split(' '))
 
         if len(l) == 1:
-            if (l[0].lower() == 'car'):
+            if l[0].lower() == 'car':
                 queried = Car.objects.all()
 
         if len(l) > 1:
-            if (l[0].lower() == 'car'):
+            if l[0].lower() == 'car':
                 queried = Car.objects.filter(color__iexact=l[1].lower())
                 print(queried)
 
@@ -99,7 +104,7 @@ def add_car(request):
         color=request.POST['color'],
         description=request.POST['description'],
         date_of_purchase=request.POST['date_of_purchase'],
-        #time_of_purchase=request.POST['time_of_purchase'],
+        # time_of_purchase=request.POST['time_of_purchase'],
         available=True if avaibility == 'on' else False
 
     )
@@ -239,12 +244,14 @@ def add_booking(request):
 
     return redirect('car_rental_app:bookings')
 
+
 def delete_booking(request, id):
     booking = Booking.objects.get(pk=id)
 
     booking.delete()
 
     return redirect('car_rental_app:bookings')
+
 
 @require_POST
 def delete_booking_user_input(request):
@@ -254,6 +261,7 @@ def delete_booking_user_input(request):
     booking.delete()
 
     return redirect('car_rental_app:bookings')
+
 
 def update_booking(request, id):
     present_booking = Booking.objects.get(pk=id)
@@ -273,6 +281,7 @@ def update_booking(request, id):
 
     return render(request, 'car_rental_app/booking_update.html', context)
 
+
 def update_booking_by_user(request):
     idz = int(request.POST['idz'])
     present_booking = Booking.objects.get(pk=idz)
@@ -286,6 +295,7 @@ def update_booking_by_user(request):
 
     return render(request, 'car_rental_app/booking_update.html', context)
 
+
 class ChartView(TemplateView):
     template_name = 'car_rental_app/charts.html'
 
@@ -294,55 +304,71 @@ class ChartView(TemplateView):
 
         carzzz = []
         namezzz = []
-        for x in range(1999,2021):
+        for x in range(1999, 2021):
             carzzz.append(Car.objects.filter(date_of_purchase__year=x).count())
             namezzz.append(f'{x}')
-
 
         max_car_sales_year = int(namezzz[carzzz.index(max(carzzz))])
         min_car_sales_year = int(namezzz[carzzz.index(min(carzzz))])
 
         context = {
             'namezzz': namezzz,
-            'carzzz' : carzzz,
+            'carzzz': carzzz,
             'max_car_sales_year': max_car_sales_year,
             'min_car_sales_year': min_car_sales_year
         }
 
         return context
 
+
 def good_cars(request):
     in_good_condition = [good_one for good_one in Car.objects.filter(description__iexact='good')]
 
     context = {
-        'in_good_condition' : in_good_condition,
+        'in_good_condition': in_good_condition,
     }
 
     return render(request, 'car_rental_app/goodones.html', context)
+
 
 def fair_cars(request):
     in_fair_condition = [good_one for good_one in Car.objects.filter(description__iexact='fair')]
 
     context = {
-        'in_fair_condition' : in_fair_condition,
+        'in_fair_condition': in_fair_condition,
     }
 
     return render(request, 'car_rental_app/fair_cars.html', context)
+
 
 def excellent_cars(request):
     in_excellent_condition = [good_one for good_one in Car.objects.filter(description__iexact='excellent')]
 
     context = {
-        'in_excellent_condition' : in_excellent_condition,
+        'in_excellent_condition': in_excellent_condition,
     }
 
     return render(request, 'car_rental_app/excellent_cars.html', context)
 
-def cars_after_date(request):
-    after_date = [ x for x in Car.objects.filter(date_of_purchase__gt=datetime.date(2010,1,1)).order_by('date_of_purchase')]
+
+def color_of_car(request, color):
+    colorzzz = [good_one for good_one in Car.objects.filter(color__iexact=color)]
+    color_set = set([colors.color for colors in Car.objects.all()])
 
     context = {
-        'after_date' : after_date
+        'colorzzz': colorzzz,
+        'color_set': color_set
     }
 
-    return render(request, 'car_rental_app/car_after_date.html', context)
+    return render(request, 'car_rental_app/car_color.html', context)
+
+
+def cars_after_date(request):
+    after_date = [x for x in
+                  Car.objects.filter(date_of_purchase__gt=datetime.date(2010, 1, 1)).order_by('date_of_purchase')]
+
+    context = {
+        'after_date': after_date
+    }
+
+    return render()
