@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
 
 from .models import Customer, Car, Booking
-from .forms import Query_Form, Car_Form, id_form, Car_update_form, Customer_form, Booking_form
+from .forms import Query_Form, Car_Form, id_form, Car_update_form, CustomerForm, BookingForm, DateRangeForm
 
 import datetime
 
@@ -30,7 +30,8 @@ def car(request):
         'cars': cars,
         'car_form': car_form,
         'car_id_form': car_id_form,
-        'color_set': color_set
+        'color_set': color_set,
+        'dateRangeForm': DateRangeForm
     }
 
     return render(request, 'car_rental_app/car.html', context)
@@ -38,7 +39,7 @@ def car(request):
 
 def customer(request):
     customers = Customer.objects.all()
-    customer_form = Customer_form()
+    customer_form = CustomerForm()
     customer_id_form = id_form()
 
     context = {
@@ -52,7 +53,7 @@ def customer(request):
 
 def booking(request):
     bookings = Booking.objects.all()
-    booking_form = Booking_form()
+    booking_form = BookingForm()
     booking_id_form = id_form()
 
     context = {
@@ -175,7 +176,7 @@ def update_car_user_input(request):
 # CUSTOMER SECTION
 @require_POST
 def add_customer(request):
-    customer_form = Customer_form(request.POST)
+    customer_form = CustomerForm(request.POST)
 
     if customer_form.is_valid():
         customer_form.save()
@@ -204,10 +205,10 @@ def delete_customer_user_input(request):
 def update_customer(request, id):
     present_customer = Customer.objects.get(pk=id)
 
-    edit_form = Customer_form(instance=present_customer)
+    edit_form = CustomerForm(instance=present_customer)
 
     if request.method == 'POST':
-        edit_form = Customer_form(request.POST, instance=present_customer)
+        edit_form = CustomerForm(request.POST, instance=present_customer)
         if edit_form.is_valid():
             edit_form.save()
             return redirect('car_rental_app:customers')
@@ -224,7 +225,7 @@ def update_customer_by_user(request):
     idz = int(request.POST['idz'])
     customer = Customer.objects.get(pk=idz)
 
-    edit_form = Customer_form(instance=customer)
+    edit_form = CustomerForm(instance=customer)
 
     context = {
         'edit_form': edit_form,
@@ -238,7 +239,7 @@ def update_customer_by_user(request):
 
 @require_POST
 def add_booking(request):
-    booking_form = Booking_form(request.POST)
+    booking_form = BookingForm(request.POST)
     if booking_form.is_valid():
         booking_form.save()
 
@@ -266,10 +267,10 @@ def delete_booking_user_input(request):
 def update_booking(request, id):
     present_booking = Booking.objects.get(pk=id)
 
-    edit_form = Booking_form(instance=present_booking)
+    edit_form = BookingForm(instance=present_booking)
 
     if request.method == 'POST':
-        edit_form = Booking_form(request.POST, instance=present_booking)
+        edit_form = BookingForm(request.POST, instance=present_booking)
         if edit_form.is_valid():
             edit_form.save()
             return redirect('car_rental_app:bookings')
@@ -286,7 +287,7 @@ def update_booking_by_user(request):
     idz = int(request.POST['idz'])
     present_booking = Booking.objects.get(pk=idz)
 
-    edit_form = Booking_form(instance=present_booking)
+    edit_form = BookingForm(instance=present_booking)
 
     context = {
         'edit_form': edit_form,
@@ -362,13 +363,20 @@ def color_of_car(request, color):
 
     return render(request, 'car_rental_app/car_color.html', context)
 
+@require_POST
+def cars_date_query(request):
 
-def cars_after_date(request):
-    after_date = [x for x in
-                  Car.objects.filter(date_of_purchase__gt=datetime.date(2010, 1, 1)).order_by('date_of_purchase')]
+    dateform = DateRangeForm(request.POST)
+
+    starting = request.POST['startingDate']
+    ending = request.POST['endingDate']
+
+    queried_date_data = [x for x in
+                  Car.objects.filter(date_of_purchase__range=[starting, ending]).order_by('date_of_purchase')]
 
     context = {
-        'after_date': after_date
+        'queried_date_data': queried_date_data
     }
 
-    return render()
+    return render(request, 'car_rental_app/car_after_date.html', context)
+

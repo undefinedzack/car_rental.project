@@ -33,7 +33,7 @@ urlpatterns = [
     path('cars/goodones', views.good_cars, name='good cars'),
     path('cars/fairones', views.fair_cars, name='fair cars'),
     path('cars/excellentones', views.excellent_cars, name='excellent cars'),
-    path('cars/car_after_date', views.cars_after_date, name='car after date'),
+    path('cars/car_in_range', views.cars_date_query, name='car in range'),
 
     path('cars/color/<str:color>', views.color_of_car, name='car color'),
 
