@@ -244,6 +244,13 @@
             </div>
         {% endif %}
 
+        {% if cars.has_previous %}
+            <a href="{% url 'car_rental_app:cars' %}?page={{ cars.previous_page_number }}">Previous Page</a>
+        {% endif %}
+        {% if cars.has_next %}
+            <a href="{% url 'car_rental_app:cars' %}?page={{ cars.next_page_number }}">Next Page</a>
+        {% endif %}
+
     </div>
 
 {% endblock %}

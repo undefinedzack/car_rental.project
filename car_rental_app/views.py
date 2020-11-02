@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator, EmptyPage
 
 from .models import Customer, Car, Booking
 from .forms import Query_Form, Car_Form, id_form, Car_update_form, CustomerForm, BookingForm, DateRangeForm
-
-import datetime
 
 
 def home(request):
@@ -23,11 +22,19 @@ def car(request):
     car_form = Car_Form()
     car_id_form = id_form()
 
+    car_pages = Paginator(cars, 20)
+
+    page_num = request.GET.get('page', 1)
+    try:
+        page = car_pages.page(page_num)
+    except EmptyPage:
+        page = car_pages.page(1)
+
     color_set = set(str(colors.color) for colors in Car.objects.all() if str(colors.color) != '')
     print(color_set)
 
     context = {
-        'cars': cars,
+        'cars': page,
         'car_form': car_form,
         'car_id_form': car_id_form,
         'color_set': color_set,
@@ -42,8 +49,16 @@ def customer(request):
     customer_form = CustomerForm()
     customer_id_form = id_form()
 
+    customer_pages = Paginator(customers, 20)
+
+    page_num = request.GET.get('page', 1)
+    try:
+        page = customer_pages.page(page_num)
+    except EmptyPage:
+        page = customer_pages.page(1)
+
     context = {
-        'customers': customers,
+        'customers': page,
         'customer_form': customer_form,
         'customer_id_form': customer_id_form
     }

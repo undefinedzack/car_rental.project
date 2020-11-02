@@ -146,4 +146,11 @@
 
     {% endif %}
 
+    {% if customers.has_previous %}
+            <a href="{% url 'car_rental_app:customers' %}?page={{ customers.previous_page_number }}">Previous Page</a>
+        {% endif %}
+        {% if customers.has_next %}
+            <a href="{% url 'car_rental_app:customers' %}?page={{ customers.next_page_number }}">Next Page</a>
+        {% endif %}
+
 {% endblock %}
