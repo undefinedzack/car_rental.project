@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage
 
 from .models import Customer, Car, Booking
-from .forms import Query_Form, Car_Form, id_form, Car_update_form, CustomerForm, BookingForm, DateRangeForm
+from .forms import Query_Form, Car_Form, id_form, Car_update_form, CustomerForm, BookingForm, DateRangeForm, name_form
 
 
 def home(request):
@@ -45,9 +45,10 @@ def car(request):
 
 
 def customer(request):
-    customers = Customer.objects.all()
+    customers = Customer.objects.prefetch_related('car_id').all()
     customer_form = CustomerForm()
     customer_id_form = id_form()
+    name_formz = name_form()
 
     customer_pages = Paginator(customers, 20)
 
@@ -60,7 +61,8 @@ def customer(request):
     context = {
         'customers': page,
         'customer_form': customer_form,
-        'customer_id_form': customer_id_form
+        'customer_id_form': customer_id_form,
+        'name_form': name_formz
     }
 
     return render(request, 'car_rental_app/customers.html', context)
@@ -380,9 +382,6 @@ def color_of_car(request, color):
 
 @require_POST
 def cars_date_query(request):
-
-    dateform = DateRangeForm(request.POST)
-
     starting = request.POST['startingDate']
     ending = request.POST['endingDate']
 
@@ -395,3 +394,51 @@ def cars_date_query(request):
 
     return render(request, 'car_rental_app/car_after_date.html', context)
 
+def customer_queried_by_cars(request):
+
+
+    customerz = Customer.objects.prefetch_related('car_id').all()
+
+    car_ids = []
+    for x in customerz:
+        car_ids.append(x.car_id)
+
+    print(len(customerz))
+    unique_car_ids = set(car_ids)
+    print(len(unique_car_ids))
+    #counting it with names
+
+    names = []
+    count = []
+    for i in unique_car_ids:
+        carObject = i
+        names.append(f"Model: {carObject.model} Id: {carObject.id}")
+
+        count.append(car_ids.count(i))
+
+    max_count_index = count.index(max(count))
+    name_of_max_purchased = names[max_count_index]
+
+    min_count_index = count.index(min(count))
+    name_of_min_purchased = names[min_count_index]
+    context = {
+        'names': names,
+        'count' : count,
+        'max_count_name': name_of_max_purchased,
+        'min_count_name': name_of_min_purchased
+    }
+
+    return render(request, 'car_rental_app/ChartCustomer.html', context)
+
+@require_POST
+def find_customer_with_name(request):
+
+    name = request.POST['namez']
+    print(name)
+    peeps = Customer.objects.filter(first_name__icontains=name) | Customer.objects.filter(last_name__icontains=name)
+
+    context = {
+        'peeps': peeps
+    }
+
+    return render(request, 'car_rental_app/find_customer_with_name.html', context)

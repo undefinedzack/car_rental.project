@@ -34,7 +34,10 @@ urlpatterns = [
     path('cars/fairones', views.fair_cars, name='fair cars'),
     path('cars/excellentones', views.excellent_cars, name='excellent cars'),
     path('cars/car_in_range', views.cars_date_query, name='car in range'),
-
     path('cars/color/<str:color>', views.color_of_car, name='car color'),
+
+    path('customers/customer_charts', views.customer_queried_by_cars, name='Chart Customer'),
+    path('customers/find_customer_by_name', views.find_customer_with_name, name='find customer by name')
+
 
 ]

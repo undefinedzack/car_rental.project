@@ -23,6 +23,9 @@ class Car_Form(forms.Form):
 class id_form(forms.Form):
     idz = forms.IntegerField()
 
+class name_form(forms.Form):
+    namez = forms.CharField()
+
 
 class Car_update_form(forms.ModelForm):
     class Meta:

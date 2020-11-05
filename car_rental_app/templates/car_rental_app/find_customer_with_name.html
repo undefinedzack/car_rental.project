@@ -9,7 +9,6 @@
                 <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#customerDeleteModal">Delete Customer</button>
                 <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#customerEditModal">Edit Customer</button>
                 <a href="{% url 'car_rental_app:Chart Customer' %}"> <button type="button" class="btn btn-secondary btn-lg">Customer Vs Cars Sold</button></a>
-                <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#customerName">Find Customer</button>
             </div>
         </div>
     </div>
@@ -112,44 +111,13 @@
               </div>
             </div>
 
-{#    name of customer model#}
-<div class="modal fade" id="customerName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Car</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="{% url 'car_rental_app:find customer by name' %}" method="post">
-                        {% csrf_token %}
-
-                        <div class="input-group input-group-lg">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-                                </div>
-                            {{name_form.namez}}
-                            </div>
-
-                        <button type="submit" class="btn btn-info">Find the person</button>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
 
 
-    {% if customers %}
+    {% if peeps %}
         <div class="container">
             <div class="row mt-3">
-                {% for customer in customers %}
+                {% for customer in peeps %}
                     <div class="col-4 mt-2">
                         <div class="card text-center">
                                 <div class="card-header">
@@ -170,6 +138,7 @@
                                 <p class="card-text">{{ customer.last_name }}</p>
                                 <p class="card-text">{{ customer.mobile_no }}</p>
                                 <p class="card-text">{{ customer.car_id }}</p>
+
                             </div>
                         </div>
                     </div>

@@ -5,13 +5,27 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'car_rental_app:cars' %}">Cars</a></li>
-                        <li class="breadcrumb-item"><a href={% url 'car_rental_app:customers' %}>Customers</a></li>
-                        <li class="breadcrumb-item active"><a href={% url 'car_rental_app:bookings' %}>Bookings</a></li>
-                    </ol>
-                </nav>
+
+                <ul class="nav justify-content-center">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'car_rental_app:cars' %}">Cars</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href={% url 'car_rental_app:customers' %}>Customers</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href={% url 'car_rental_app:bookings' %}>Bookings</a>
+                  </li>
+                </ul>
+
+
+{#                <nav aria-label="breadcrumb">#}
+{#                    <ol class="breadcrumb">#}
+{#                        <li class="breadcrumb-item"><a href="{% url 'car_rental_app:cars' %}">Cars</a></li>#}
+{#                        <li class="breadcrumb-item"><a href={% url 'car_rental_app:customers' %}>Customers</a></li>#}
+{#                        <li class="breadcrumb-item active"><a href={% url 'car_rental_app:bookings' %}>Bookings</a></li>#}
+{#                    </ol>#}
+{#                </nav>#}
             </div>
         </div>
     </div>

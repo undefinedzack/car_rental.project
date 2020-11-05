@@ -11,7 +11,7 @@ class Car(models.Model):
     available = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.brand
+        return f"{self.id} {self.model} {self.brand}"
 
 
 class Customer(models.Model):
