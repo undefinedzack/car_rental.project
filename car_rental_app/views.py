@@ -69,12 +69,20 @@ def customer(request):
 
 
 def booking(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.prefetch_related('car_id', 'customer_id').all()
     booking_form = BookingForm()
     booking_id_form = id_form()
 
+    booking_pages = Paginator(bookings, 20)
+
+    page_num = request.GET.get('page', 1)
+    try:
+        page = booking_pages.page(page_num)
+    except EmptyPage:
+        page = booking_pages.page(1)
+
     context = {
-        'bookings': bookings,
+        'bookings': page,
         'booking_form': booking_form,
         'booking_id_form': booking_id_form
     }
