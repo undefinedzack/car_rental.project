@@ -6,17 +6,44 @@
         <div class="row">
             <div class="col-12">
 
-                <ul class="nav justify-content-center">
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'car_rental_app:cars' %}">Cars</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href={% url 'car_rental_app:customers' %}>Customers</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href={% url 'car_rental_app:bookings' %}>Bookings</a>
-                  </li>
-                </ul>
+{#                <ul class="nav justify-content-center">#}
+{#                  <li class="nav-item">#}
+{#                    <a class="nav-link" href="{% url 'car_rental_app:cars' %}">Cars</a>#}
+{#                  </li>#}
+{#                  <li class="nav-item">#}
+{#                    <a class="nav-link" href={% url 'car_rental_app:customers' %}>Customers</a>#}
+{#                  </li>#}
+{#                  <li class="nav-item">#}
+{#                    <a class="nav-link" href={% url 'car_rental_app:bookings' %}>Bookings</a>#}
+{#                  </li>#}
+{#                </ul>#}
+
+                <div class="card-group">
+                  <div class="card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.UgHtedC7gETLyFwX5YjmwAHaEC%26pid%3DApi&f=1" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Car's</h5>
+                      <p class="card-text">This is description of Car's database.</p>
+                      <a href="{% url 'car_rental_app:cars' %}" class="card-link">Explore Car's Database</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP._MgMgnBB3hfeFWYy4Pb09AHaEO%26pid%3DApi&f=1" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Customer's</h5>
+                      <p class="card-text">This is description of Customer's database.</p>
+                      <a href="{% url 'car_rental_app:customers' %}" class="card-link">Explore Customer's Database</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.3j9o1_Y0J7zKhJFF_QZbuAHaFj%26pid%3DApi&f=1" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Booking's</h5>
+                      <p class="card-text">This is description of Bookings's database.</p>
+                      <a href="{% url 'car_rental_app:bookings' %}" class="card-link">Explore Booking's Database</a>
+                    </div>
+                  </div>
+                </div>
 
 
 {#                <nav aria-label="breadcrumb">#}
