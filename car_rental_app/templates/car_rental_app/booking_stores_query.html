@@ -10,17 +10,7 @@
                 <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#bookingDeleteModal">Delete Booking</button>
                 <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#bookingEditModal">Edit Booking</button>
                 <a href="{% url 'car_rental_app:Chart Booking' %}"><button type="button" class="btn btn-secondary btn-lg">Booking Vs Year</button></a>
-                <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#customerNameModal">Find Customer</button>
-                <div class="dropdown">
-                      <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Stores
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          {% for store in stores %}
-                                <a class="dropdown-item" href="{% url 'car_rental_app:Booking store query' store %}">{{ store }}</a>
-                          {% endfor %}
-                      </div>
-                    </div>
+
 
             </div>
         </div>
@@ -125,41 +115,10 @@
               </div>
             </div>
 
-        <!--Customer name booking Modal -->
-        <div class="modal fade" id="customerNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Find Customer's Bookings</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col mt-4 mb-4">
-                            <form action="{% url 'car_rental_app:booking customer name' %}" method="post">
-                                {% csrf_token %}
-                                {{ name_customer_form.as_p }}
-
-                                <button type="submit" class="btn btn-info">Find Customer</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {% if bookings %}
+        {% if stores_booking %}
             <div class="container">
                 <div class="row mt-3">
-                    {% for booking in bookings %}
+                    {% for booking in stores_booking %}
                         <div class="col-4 mt-2">
                             <div class="card text-center">
                                     <div class="card-header">
@@ -191,18 +150,18 @@
         {% endif %}
 
         <div class="container">
-            <nav aria-label="Page navigation example" class="mt-4">
-              <ul class="pagination">
-                  {% if bookings.has_previous %}
-                        <li class="page-item"><a class="page-link" href="{% url 'car_rental_app:bookings' %}?page={{ bookings.previous_page_number }}">Previous</a></li>
-                  {% endif %}
-                    {% if bookings.has_next %}
-                        <li class="page-item"><a class="page-link" href="{% url 'car_rental_app:bookings' %}?page={{ bookings.next_page_number }}">Next</a></li>
-                    {% endif %}
-              </ul>
-            </nav>
-        </div>
+        <nav aria-label="Page navigation example" class="mt-4">
+          <ul class="pagination">
+              {% if stores_booking.has_previous %}
+                    <li class="page-item"><a class="page-link" href="{% url 'car_rental_app:Booking store query' the_store%}?page={{ stores_booking.previous_page_number }}">Previous</a></li>
+              {% endif %}
+                {% if stores_booking.has_next %}
+                    <li class="page-item"><a class="page-link" href="{% url 'car_rental_app:Booking store query' the_store%}?page={{ stores_booking.next_page_number }}">Next</a></li>
+                {% endif %}
+          </ul>
+        </nav>
+    </div>
 
-        </div>
+    </div>
 
 {% endblock %}

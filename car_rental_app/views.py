@@ -72,6 +72,7 @@ def booking(request):
     bookings = Booking.objects.prefetch_related('car_id', 'customer_id').all()
     booking_form = BookingForm()
     booking_id_form = id_form()
+    name_customer_form = name_form()
 
     booking_pages = Paginator(bookings, 20)
 
@@ -81,10 +82,14 @@ def booking(request):
     except EmptyPage:
         page = booking_pages.page(1)
 
+    stores = ['Store A', 'Store B', 'Store C', 'Store D']
+
     context = {
         'bookings': page,
         'booking_form': booking_form,
-        'booking_id_form': booking_id_form
+        'booking_id_form': booking_id_form,
+        'stores': stores,
+        'name_customer_form': name_customer_form
     }
 
     return render(request, 'car_rental_app/bookings.html', context)
@@ -450,3 +455,57 @@ def find_customer_with_name(request):
     }
 
     return render(request, 'car_rental_app/find_customer_with_name.html', context)
+
+def booking_month_graph(request):
+    bookingsInAnyMonth = []
+    years = []
+
+    for i in range(2000,2021):
+        years.append(i)
+        bookingsInAnyMonth.append(Booking.objects.filter(date_of_issue__year=i).count())
+
+    maxxx = years[bookingsInAnyMonth.index(max(bookingsInAnyMonth))]
+    minnn = years[bookingsInAnyMonth.index(min(bookingsInAnyMonth))]
+
+    context = {
+        'bookingsInAnyMonth': bookingsInAnyMonth,
+        'years': years,
+        'maxxx': maxxx,
+        'minnn': minnn
+    }
+
+    return render(request, 'car_rental_app/bookingsGraph.html', context)
+
+def booking_store_query(request, store):
+
+    stores_booking = Booking.objects.filter(pickup_location__icontains=store)
+
+    #print(stores_booking)
+
+    booking_pages = Paginator(stores_booking, 20)
+
+    page_num = request.GET.get('page', 1)
+    try:
+        page = booking_pages.page(page_num)
+    except EmptyPage:
+        page = booking_pages.page(1)
+
+    context = {
+        'stores_booking' : page,
+        'the_store': store
+    }
+
+    return render(request, 'car_rental_app/booking_stores_query.html', context)
+
+@require_POST
+def booking_name_customer(request):
+    name = request.POST['namez']
+    print(name)
+
+    names = Booking.objects.filter(customer_id__first_name__iexact=name)
+
+    context = {
+        'names': names
+    }
+
+    return render(request, 'car_rental_app/booking_customer_name.html', context)

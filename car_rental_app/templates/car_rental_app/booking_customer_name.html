@@ -10,7 +10,7 @@
                 <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#bookingDeleteModal">Delete Booking</button>
                 <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#bookingEditModal">Edit Booking</button>
                 <a href="{% url 'car_rental_app:Chart Booking' %}"><button type="button" class="btn btn-secondary btn-lg">Booking Vs Year</button></a>
-                <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#customerNameModal">Find Customer</button>
+
                 <div class="dropdown">
                       <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Stores
@@ -125,41 +125,10 @@
               </div>
             </div>
 
-        <!--Customer name booking Modal -->
-        <div class="modal fade" id="customerNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Find Customer's Bookings</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col mt-4 mb-4">
-                            <form action="{% url 'car_rental_app:booking customer name' %}" method="post">
-                                {% csrf_token %}
-                                {{ name_customer_form.as_p }}
-
-                                <button type="submit" class="btn btn-info">Find Customer</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {% if bookings %}
+        {% if names%}
             <div class="container">
                 <div class="row mt-3">
-                    {% for booking in bookings %}
+                    {% for booking in names %}
                         <div class="col-4 mt-2">
                             <div class="card text-center">
                                     <div class="card-header">
