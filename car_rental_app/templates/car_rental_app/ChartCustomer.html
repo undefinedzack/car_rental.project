@@ -5,7 +5,7 @@
     <script>
     $(document).ready(function (){
         var ctx = document.getElementById('myChart').getContext('2d');
-        var ctx2 = document.getElementById('myChart2').getContext('2d');
+        {#var ctx2 = document.getElementById('myChart2').getContext('2d');#}
 
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -92,9 +92,9 @@
             <div class="col-12">
                 <canvas id="myChart" width="400" height="200"></canvas>
             </div>
-            <div class="col-12">
-                <canvas id="myChart2" width="400" height="200"></canvas>
-            </div>
+{#            <div class="col-12">#}
+{#                <canvas id="myChart2" width="400" height="200"></canvas>#}
+{#            </div>#}
         </div>
 
 
