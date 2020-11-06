@@ -41,7 +41,8 @@ urlpatterns = [
 
     path('bookings/booking_charts', views.booking_month_graph, name='Chart Booking'),
     path('bookings/store/<str:store>', views.booking_store_query, name='Booking store query'),
-    path('bookings/booking_name_customer', views.booking_name_customer, name='booking customer name')
+    path('bookings/booking_name_customer', views.booking_name_customer, name='booking customer name'),
+    path('bookings/booking_date_range', views.booking_date_range, name='booking date range')
 
 
 ]

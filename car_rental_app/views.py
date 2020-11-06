@@ -73,6 +73,7 @@ def booking(request):
     booking_form = BookingForm()
     booking_id_form = id_form()
     name_customer_form = name_form()
+    date_range_form = DateRangeForm()
 
     booking_pages = Paginator(bookings, 20)
 
@@ -89,7 +90,8 @@ def booking(request):
         'booking_form': booking_form,
         'booking_id_form': booking_id_form,
         'stores': stores,
-        'name_customer_form': name_customer_form
+        'name_customer_form': name_customer_form,
+        'date_range_form': date_range_form
     }
 
     return render(request, 'car_rental_app/bookings.html', context)
@@ -509,3 +511,16 @@ def booking_name_customer(request):
     }
 
     return render(request, 'car_rental_app/booking_customer_name.html', context)
+
+@require_POST
+def booking_date_range(request):
+    starting_date = request.POST['startingDate']
+    ending_date = request.POST['endingDate']
+
+    bookingz = Booking.objects.filter(date_of_issue__range=[starting_date, ending_date])
+
+    context = {
+        'bookings' : bookingz
+    }
+
+    return render(request, 'car_rental_app/booking_date_range.html', context)
