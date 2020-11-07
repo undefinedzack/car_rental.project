@@ -11,6 +11,8 @@
 5. That's all.
 
 
+<h1>Outputs</h1>
+
 <img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/homepage.png"/>
 
 <img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/Add_Booking.png "/>
