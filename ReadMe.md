@@ -1,4 +1,4 @@
-#Setting up working environment ->
+
 
 1. Project live at https://hidden-garden-61757.herokuapp.com/
 
