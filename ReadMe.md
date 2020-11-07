@@ -10,3 +10,11 @@
 
 
 <img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/homepage.png"/>
+
+<img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/Add_Booking.png "/>
+
+<img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/Most_and_least_booking_years.png"/>
+
+<img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/Customer_search_query.png"/>
+
+<img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/Booking_search_query_result.png"/>
