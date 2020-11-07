@@ -7,3 +7,6 @@
 3. Get to the repository and download via pycharm icon
 
 4. That's all.
+
+
+<img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/homepage.png"/>
