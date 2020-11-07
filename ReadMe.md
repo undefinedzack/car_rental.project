@@ -1,14 +1,10 @@
 #Setting up working environment ->
 
-1. Get Jetbrains ToolBox Extension : https://chrome.google.com/webstore/detail/jetbrains-toolbox-extensi/offnedcbhjldheanlbojaefbfbllddna?hl=en
+1. Project live at https://hidden-garden-61757.herokuapp.com/
 
-2. Install Toolbox App from https://www.jetbrains.com/toolbox-app/
+2. Outputs also available at https://github.com/undefinedzack/car_rental.project/tree/master/Output
 
-3. Get to the repository and download via pycharm icon
-
-4. Outputs also available at https://github.com/undefinedzack/car_rental.project/tree/master/Output
-
-5. That's all.
+3. That's all.
 
 
 <h1>Output</h1>
