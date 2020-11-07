@@ -11,7 +11,7 @@
 5. That's all.
 
 
-<h1>Outputs</h1>
+<h1>Output</h1>
 
 <img src = "https://github.com/undefinedzack/car_rental.project/blob/master/Output/homepage.png"/>
 
