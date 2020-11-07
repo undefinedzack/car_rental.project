@@ -6,7 +6,7 @@
 
 3. Get to the repository and download via pycharm icon
 
-4.Outputs also available at https://github.com/undefinedzack/car_rental.project/tree/master/Output
+4.Outputs also at https://github.com/undefinedzack/car_rental.project/tree/master/Output
 
 5. That's all.
 
